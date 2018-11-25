@@ -1,0 +1,112 @@
+<html>
+<head>
+  <link href="https://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+  <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  
+  <title>天气预报</title>
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            /*边界看宽度默认为8,在这里初始值设为零*/
+            margin: 0;
+ 
+            /*高度100%,整个界面*/
+            height: 100%;
+ 
+            /*display: inline-block 转换为行内块元素*/
+            /*display: flex 将该标签作为弹性布局的容器*/
+            display: flex;
+ 
+            /*指定容器内的item布局方向*/
+            /*row 容器内的item按照x轴(主轴方向布局)*/
+            /*column 容器内的item按照y轴(交叉轴)方向布局*/
+            /*row-reverse 容器内的item按照x轴反向布局*/
+            /*column-reserve 容器内的item按照y轴反向布局*/
+            flex-direction: column;
+ 
+            /*文本居中*/
+            text-align: center;
+ 
+            /*设置背景图片*/
+            /*rgb() red green blue  取值0~255*/
+            /*rgba() red green blue alpha(取0~1)*/
+            /*设置背景色从rgb(14,105,189)到red值从上到下渐变*/
+            /*background-image: linear-gradient(to bottom,rgb(14,105,189),red);*/
+          	color: white;
+          	background-image: url(/weixin/pic/bg.jpg);
+  			background-size:100% ;
+  			background-repeat:no-repeat;
+          	
+ 
+            /*主轴项目item的布局方式*/
+            justify-content: space-between;
+ 
+            /*交叉轴的项目item布局方式*/
+            /*align-items: ;*/
+        }
+        main{
+          	
+        }
+        img{
+            /*width: 设置图片显示宽度，高度会自适应*/
+            width: 80px;
+        }
+        footer{
+            /*display: flex 将该标签作为弹性布局的容器*/
+            display: flex;
+            /*设置item的布局方式*/
+            justify-content: space-between;
+        }
+        footer section{
+            /*宽度占比33%*/
+            width: 33%;
+            border-right: 1px white solid;
+        }
+    </style>
+</head>
+  
+<body>
+    <!--main 块元素 标记网页中的主要内容-->
+    <main>
+        <!--alt alter 当图片未被加载出来时，以文本方式代替图片显示-->
+        <!--title 当鼠标停留在图片上时，展示的文本-->
+        <!--h1~h6 标题标签, 标签独自占一行空间，称之为块元素-->
+      	<h1>北京 beijing</h1>
+      	<img src="/weixin/pic/duoyun.png" alt="duoyun.png">
+        <h2>-1°/ 9°</h2>
+        <h3>多云</h3>
+      	<h3>相对湿度：60%</h3>
+        <!--p标签，用来标记网页中的段落内容！-->
+        <p>东北风/3-4级</p>
+        <p>实时温度: 8°,空气质量指数65,良</p>
+    </main>
+ 
+	<!--footer 网页中的尾部内容-->
+	<footer>
+        <!--section 组件、模块, 块元素-->
+        <section>
+            <p>今天</p>
+            <p>-4°/ 9°</p>
+            <img src="/weixin/pic/duoyun.png" alt="">
+            <p>多云</p>
+            <p>南风微风</p>
+        </section>
+        <section>
+            <p>明天</p>
+            <p>-2°/ 11°</p>
+            <img src="/weixin/pic/qing.jpg" alt="">
+            <p>晴</p>
+            <p>南风微风</p>
+        </section>
+        <section>
+            <p>后天</p>
+            <p>-3°/ 14°</p>
+            <img src="/weixin/pic/qing.jpg" alt="">
+            <p>晴</p>
+            <p>南风微风</p>
+        </section>
+    </footer>
+</body>
