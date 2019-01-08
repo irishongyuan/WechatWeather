@@ -91,14 +91,15 @@ class wechatCallbackapiTest
             $str = mb_substr($keyword,-2,2,"UTF-8");
             $str_key = mb_substr($keyword,0,-2,"UTF-8");
             if($str == '天气' && !empty($str_key)){
+              	//$contentStr = $this->weather($str_key);
                 $data = $this->weather($str_key);
-                if(empty($data->weatherinfo)){
+                if(empty($data->HeWeather6[0])){
                     $contentStr = "抱歉，没有查到\"".$str_key."\"的天气信息！";
                 } else {
-                    $contentStr = "【".$data->weatherinfo->city."天气预报】\n".$data->weatherinfo->time."\n\n实时天气\n"."\n当前温度:\n".$data->weatherinfo->temp."\n当前风向风力:\n".$data->weatherinfo->WD." ".$data->weatherinfo->WS."\n\n温馨提示：".$data->weatherinfo->njd;
+                    $contentStr = "【".$data->HeWeather6[0]->basic->location."天气预报】\n".$data->HeWeather6[0]->update->loc."\n\n【实时天气】\n当前天气:".$data->HeWeather6[0]->now->cond_txt."\n当前温度: ".$data->HeWeather6[0]->now->tmp."℃\n当前风向风向: ".$data->HeWeather6[0]->now->wind_dir."\n当前风向风力: ".$data->HeWeather6[0]->now->wind_sc."级\n\n【未来两天预报】\n".$data->HeWeather6[0]->daily_forecast[1]->date.":\n天气：".$data->HeWeather6[0]->daily_forecast[1]->cond_txt_d."\n温度：".$data->HeWeather6[0]->daily_forecast[1]->tmp_min."℃ ~ ".$data->HeWeather6[0]->daily_forecast[1]->tmp_max."℃\n\n".$data->HeWeather6[0]->daily_forecast[2]->date.":\n天气：".$data->HeWeather6[0]->daily_forecast[2]->cond_txt_d."\n温度：".$data->HeWeather6[0]->daily_forecast[2]->tmp_min."℃ ~ ".$data->HeWeather6[0]->daily_forecast[2]->tmp_max."℃\n\n【温馨提示】\n".$data->HeWeather6[0]->lifestyle[0]->txt."\n\n".$data->HeWeather6[0]->lifestyle[1]->txt."\n\n".$data->HeWeather6[0]->lifestyle[2]->txt."\n\n".$data->HeWeather6[0]->lifestyle[3]->txt."\n\n".$data->HeWeather6[0]->lifestyle[4]->txt;                  
                 }
             } else {
-                $contentStr = "感谢您关注【小源不圆】"."\n"."微信号：hongyuaniris"."\n"."查阅北京、上海、苏州天气的微信平台。"."\n"."目前平台功能如下："."\n"."【1】 查天气，如输入：北京天气"."\n"."更多内容，敬请期待...";
+                $contentStr = "感谢您关注【小源不圆】"."\n"."微信号：hongyuaniris"."\n"."查阅各个城市天气的微信平台。"."\n"."目前平台功能如下："."\n"."【1】 查天气，如输入：北京天气"."\n"."更多内容，敬请期待...";
             }
             $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
             echo $resultStr;
@@ -113,7 +114,7 @@ class wechatCallbackapiTest
         switch ($object->Event)
         {
             case "subscribe":
-                $contentStr = "感谢您关注【小源不圆】"."\n"."微信号：hongyuaniris"."\n"."查阅北京、上海、苏州天气的微信平台。"."\n"."目前平台功能如下："."\n"."【1】 查天气，如输入：北京天气"."\n"."更多内容，敬请期待...";
+                $contentStr = "感谢您关注【小源不圆】"."\n"."微信号：hongyuaniris"."\n"."查阅各个城市天气的微信平台。"."\n"."目前平台功能如下："."\n"."【1】 查天气，如输入：北京天气"."\n"."更多内容，敬请期待...";
                 break;
             default :
                 $contentStr = "Unknow Event: ".$object->Event;
@@ -138,14 +139,11 @@ class wechatCallbackapiTest
     }
 
     private function weather($n){
-        include("weather_cityId.php");
-        $c_name=$weather_cityId[$n];
-        if(!empty($c_name)){
-            $json=file_get_contents("http://www.weather.com.cn/data/sk/".$c_name.".html");
-            return json_decode($json);
-        } else {
-            return null;
-        }
+        //include("weather_cityId.php");
+        //$c_name=$weather_cityId[$n];
+        $json=file_get_contents("https://free-api.heweather.com/s6/weather/?key=9fd3f32c86044ef096ff48ef56e94c78&location=".$n);
+        $decodejson = json_decode($json);
+        return $decodejson;
     }
 
     private function checkSignature()
